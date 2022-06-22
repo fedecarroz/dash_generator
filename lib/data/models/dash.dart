@@ -1,9 +1,11 @@
+import 'package:dash_generator/data.dart';
+
 class Dash {
   final String agility;
   final String wisdom;
   final String strength;
   final String charisma;
-  final String role;
+  final DashRole role;
 
   Dash({
     required this.agility,
@@ -12,4 +14,6 @@ class Dash {
     required this.charisma,
     required this.role,
   });
+
+  String get filename => "$agility$wisdom$strength$charisma$role";
 }
