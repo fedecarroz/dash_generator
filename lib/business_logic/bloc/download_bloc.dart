@@ -16,7 +16,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       emit(state.copyWith(status: DownloadStatus.inProgress));
       try {
         final dashesToDownload = await _fetchUrls(emit);
-        final archive = _downloadDashes(dashesToDownload, emit);
+        final archive = await _downloadDashes(dashesToDownload, emit);
         add(DownloadFinished());
       } catch (e) {
         add(DownloadFailed());
