@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dash_generator/data.dart';
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
 
 part 'download_event.dart';
 part 'download_state.dart';
@@ -17,6 +19,21 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       try {
         final dashesToDownload = await _fetchUrls(emit);
         final archive = await _downloadDashes(dashesToDownload, emit);
+
+        final path = await FilePicker.platform.saveFile(
+          dialogTitle: 'Salva i Dash',
+          fileName: 'dashes.zip',
+          type: FileType.custom,
+          allowedExtensions: ['.zip'],
+        );
+
+        if (path == null || path == '') {
+          return add(DownloadFailed());
+        }
+
+        final file = File(path);
+        file.writeAsBytesSync(archive);
+
         add(DownloadFinished());
       } catch (e) {
         add(DownloadFailed());
