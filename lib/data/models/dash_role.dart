@@ -1,4 +1,5 @@
 enum DashRole {
+  common("common"),
   designer("designer"),
   developer("developer"),
   manager("manager");

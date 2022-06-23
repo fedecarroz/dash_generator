@@ -5,12 +5,22 @@ import 'package:http/http.dart' as http;
 const String dashatarEndpoint =
     'https://us-central1-dashatar-dev.cloudfunctions.net/';
 
-class DashApi {
-  Future<http.Response> getDashUrl(Dash dash) {
-    final url =
-        '$dashatarEndpoint/createDashatar?agility=${dash.agility}&wisdom=${dash.wisdom}&strength=${dash.strength}&charisma=${dash.charisma}&role=${dash.role}';
+class DashatarApi {
+  Future<List<http.Response>> getDashTripletUrls(BaseDash dash) async {
+    final baseUrl =
+        '$dashatarEndpoint/createDashatar?agility=${dash.agility}&wisdom=${dash.wisdom}&strength=${dash.strength}&charisma=${dash.charisma}';
 
-    return http.get(Uri.parse(url));
+    final designerUrl = '$baseUrl&role=designer';
+    final developerUrl = '$baseUrl&role=developer';
+    final managerUrl = '$baseUrl&role=manager';
+
+    final responses = <Future<http.Response>>[
+      http.get(Uri.parse(designerUrl)),
+      http.get(Uri.parse(developerUrl)),
+      http.get(Uri.parse(managerUrl)),
+    ];
+
+    return Future.wait(responses);
   }
 
   Future<String> importPermutations() {

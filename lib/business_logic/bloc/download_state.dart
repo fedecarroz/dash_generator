@@ -5,19 +5,23 @@ enum DownloadStatus { initial, inProgress, success, failure }
 
 class DownloadState extends Equatable {
   final DownloadStatus status;
+  final double loadingProgress;
 
   const DownloadState({
     this.status = DownloadStatus.initial,
+    this.loadingProgress = 0.0,
   });
 
   DownloadState copyWith({
     DownloadStatus? status,
+    double? loadingProgress,
   }) {
     return DownloadState(
       status: status ?? this.status,
+      loadingProgress: loadingProgress ?? this.loadingProgress,
     );
   }
 
   @override
-  List<Object> get props => [status];
+  List<Object> get props => [status, loadingProgress];
 }

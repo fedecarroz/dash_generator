@@ -27,7 +27,13 @@ class HomePage extends StatelessWidget {
                       vertical: 10,
                       horizontal: 15,
                     ),
-                    child: const Text('Download'),
+                    child: Text(
+                      'Download',
+                      style: CupertinoTheme.of(context)
+                          .textTheme
+                          .textStyle
+                          .copyWith(color: CupertinoColors.white),
+                    ),
                   );
 
                 case DownloadStatus.inProgress:
@@ -35,11 +41,15 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
-                      child: const LinearProgressIndicator(
-                        backgroundColor: CupertinoColors.systemGrey4,
-                        color: CupertinoColors.activeBlue,
-                        minHeight: 10,
-                        value: 0.0,
+                      child: BlocBuilder<DownloadBloc, DownloadState>(
+                        builder: (context, state) {
+                          return LinearProgressIndicator(
+                            backgroundColor: CupertinoColors.systemGrey4,
+                            color: CupertinoColors.activeBlue,
+                            minHeight: 10,
+                            value: state.loadingProgress,
+                          );
+                        },
                       ),
                     ),
                   );
@@ -84,4 +94,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-

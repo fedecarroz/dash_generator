@@ -1,1 +1,1 @@
-export 'repo/dashtar_repo.dart';
+export 'repo/dashatar_repo.dart';

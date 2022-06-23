@@ -1,19 +1,28 @@
 import 'package:dash_generator/data.dart';
 
-class Dash {
-  final String agility;
-  final String wisdom;
-  final String strength;
-  final String charisma;
+class Dash extends BaseDash {
+  final String url;
   final DashRole role;
 
   Dash({
-    required this.agility,
-    required this.wisdom,
-    required this.strength,
-    required this.charisma,
+    required this.url,
+    required super.agility,
+    required super.wisdom,
+    required super.strength,
+    required super.charisma,
     required this.role,
   });
 
-  String get filename => "$agility$wisdom$strength$charisma$role";
+  factory Dash.fromDashBase(BaseDash dash, DashRole role, String url) {
+    return Dash(
+      agility: dash.agility,
+      wisdom: dash.wisdom,
+      strength: dash.strength,
+      charisma: dash.charisma,
+      role: role,
+      url: url,
+    );
+  }
+
+  String get filename => "$role/$agility$wisdom$strength$charisma.png";
 }
