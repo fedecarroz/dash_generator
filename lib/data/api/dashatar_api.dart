@@ -24,7 +24,7 @@ class DashatarApi {
   }
 
   Future<String> importPermutations() {
-    return rootBundle.loadString('perm.csv');
+    return rootBundle.loadString('assets/perm.csv');
   }
 
   Future<http.Response> downloadDashImage(String url) {
